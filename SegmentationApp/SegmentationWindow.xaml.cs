@@ -62,7 +62,9 @@ namespace SegmentationApp
             // Pass generated segments into segment table
             Debug.Assert(IntMemSize.Value != null, "IntMemSize.Value != null");
             SegmentTable table = new SegmentTable((int)IntMemSize.Value);
-            table.Allocate(Segments);
+
+            Debug.Assert(required != null, nameof(required) + " != null");
+            table.Allocate(Segments, (int)required);
         }
 
         private void BtnApply_Click(object sender, RoutedEventArgs e)

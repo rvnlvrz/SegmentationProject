@@ -64,13 +64,7 @@
                 <Button x:Name="BtnPlaceInMemory" Content="Place in Memory" HorizontalAlignment="Left" Margin="42,5,0,0" Grid.Row="3"  VerticalAlignment="Top" Width="119" Grid.Column="1" Height="20" Click="BtnPlaceInMemory_Click" />
             </Grid>
         </GroupBox>
-        <DataGrid Height="222.2" Margin="302,10,10,0" VerticalAlignment="Top" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Segment #"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Segment Name"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Limit"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Base"/>
-            </DataGrid.Columns>
+        <DataGrid x:Name="DataGridSegments" Height="222.2" Margin="302,10,10,0" VerticalAlignment="Top" IsReadOnly="True" ItemsSource="{Binding Segments}" >
         </DataGrid>
         <local:StackedRow x:Name="BarMemory" Margin="302,239,10,0" Padding="0" VerticalAlignment="Top" Height="234.88"/>
     </Grid>
