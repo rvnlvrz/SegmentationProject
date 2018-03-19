@@ -8,10 +8,11 @@ using SegmentationLibrary.Annotations;
 
 namespace SegmentationLibrary
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Provides datatype definition for a logical address.
     /// </summary>
-    public class LogicalAddress
+    public class LogicalAddress : IComparable<LogicalAddress>
     {
         /// <summary>
         ///     Contains the limit and base address of a segment in memory.
@@ -25,6 +26,21 @@ namespace SegmentationLibrary
         public LogicalAddress(Tuple<int, int> value)
         {
             Value = value;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Implements sorting of the <see cref="T:SegmentationLibrary.LogicalAddress" /> by their base address.
+        /// </summary>
+        /// <param name="other">The <see cref="T:SegmentationLibrary.LogicalAddress" /> to compare with.</param>
+        /// <returns></returns>
+        public int CompareTo(LogicalAddress other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            if (Value.Item2 > other.Value.Item2) return 1;
+            if (Value.Item2 < other.Value.Item2) return -1;
+            return 0;
         }
     }
 
@@ -85,7 +101,7 @@ namespace SegmentationLibrary
 
             var random = new Random();
             var free = _memsize - required;
-            List<int> allocatedIndex = new List<int>();
+            var allocatedIndex = new List<int>();
             _pointer = 0;
 
             while (allocatedIndex.Count < segments.Count) // checks whether all segments have already been allocated
@@ -98,28 +114,27 @@ namespace SegmentationLibrary
                 if (coin == 0 && free != 0) // allocate a random amount of free space
                 {
                     var space = random.Next(0, free);
-                    space = (int)(Math.Round(space / 100d, MidpointRounding.AwayFromZero) * 100);
+                    space = (int) (Math.Round(space / 100d, MidpointRounding.AwayFromZero) * 100);
                     _pointer += space;
                     free -= space;
                 }
                 else // allocate memory segment
                 {
                     var size = segments[picker].Size;
-                    Debug.Assert(size != null, nameof(size) + " != null");
                     segments[picker].Base = _pointer;
-                    segments[picker].Limit = (int)(size + _pointer);
-                    _pointer += (int)size;
+                    segments[picker].Limit = size + _pointer;
+                    _pointer += size;
                     allocatedIndex.Add(picker);
                 }
             }
         }
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="INotifyPropertyChanged" />
     /// <summary>
     ///     Provides dataype definition for a memory segment.
     /// </summary>
-    public sealed class Segment : INotifyPropertyChanged
+    public sealed class Segment : INotifyPropertyChanged, IComparable<Segment>
     {
         private readonly LogicalAddress _address = new LogicalAddress(new Tuple<int, int>(0, 0));
         private string _name;
@@ -128,9 +143,13 @@ namespace SegmentationLibrary
         /// <summary>
         ///     Gets or Sets the segment number.
         /// </summary>
-        public int? Number
+        public int Number
         {
-            get => _number;
+            get
+            {
+                Debug.Assert(_number != null, nameof(_number) + " != null");
+                return (int) _number;
+            }
             set
             {
                 if (value != _number)
@@ -186,9 +205,13 @@ namespace SegmentationLibrary
         /// <summary>
         ///     Gets or Sets the size (in Bytes) of the memory segment.
         /// </summary>
-        public int? Size
+        public int Size
         {
-            get => _size;
+            get
+            {
+                Debug.Assert(_size != null, nameof(_size) + " != null");
+                return (int) _size;
+            }
             set
             {
                 if (value != _size)
@@ -197,6 +220,19 @@ namespace SegmentationLibrary
                     OnPropertyChanged();
                 }
             }
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Implements sorting a collection of <see cref="Segment" /> by their <see cref="LogicalAddress" />.
+        /// </summary>
+        /// <param name="other">The <see cref="Segment" /> to compare with.</param>
+        /// <returns></returns>
+        public int CompareTo(Segment other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            return Comparer<LogicalAddress>.Default.Compare(_address, other._address);
         }
 
         // Implementation of the INotifyPropertyChanged Interface
