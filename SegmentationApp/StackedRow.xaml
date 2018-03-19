@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="SegmentationApp.StackedRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SegmentationApp"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance local:StackedRow}">
+    <Grid>
+        <wpf:CartesianChart x:Name="StackedRowChart" Series="{Binding SeriesCollection}" LegendLocation="Bottom">
+            <wpf:CartesianChart.AxisY>
+                <wpf:Axis Labels="{Binding Labels}">
+                </wpf:Axis>
+            </wpf:CartesianChart.AxisY>
+            <wpf:CartesianChart.AxisX>
+                <wpf:Axis LabelFormatter="{Binding Formatter}">
+                    <!--<wpf:Axis.Separator>
+                        <wpf:Separator Step="2000"></wpf:Separator>
+                    </wpf:Axis.Separator>-->
+                </wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+        </wpf:CartesianChart>
+    </Grid>
+</UserControl>

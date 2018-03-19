@@ -1,0 +1,84 @@
+﻿<Window x:Name="SegmentationWindow"
+        x:Class="SegmentationApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SegmentationApp"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:segmentationLibrary="clr-namespace:SegmentationLibrary;assembly=SegmentationLibrary"
+        mc:Ignorable="d"
+        Title="Segmentation Demo" Width="800" ResizeMode="CanMinimize">
+    <Grid>
+        <GroupBox Header="Initial Parameters" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <xctk:IntegerUpDown x:Name="IntSegmentCount" HorizontalAlignment="Left" Width="129" DefaultValue="5" Minimum="1" Maximum="50" ClipValueToMinMax="True" DisplayDefaultValueOnEmptyText="True" Grid.Column="1" TextAlignment="Left" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=Label}"/>
+                <Label x:Name="Label" Grid.Row="0" Grid.Column="0" Content="Number of Segments:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Button x:Name="BtnApply" Content="Apply" Grid.Column="1" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" Click="BtnApply_Click"/>
+                <Button x:Name="BtnReset" Content="Reset" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="2"
+                        Grid.Column="0" VerticalAlignment="Top" Width="115.847" Click="BtnReset_Click"/>
+                <Label x:Name="Label1" Content="Memory Size:" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1"
+                       Grid.Column="0"/>
+                <xctk:IntegerUpDown x:Name="IntMemSize" DefaultValue="8000" Minimum="2000" Maximum="32000" ClipValueToMinMax="True" Grid.Column="1" TextAlignment="Left" Margin="0,29.96,59,0" Increment="100" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=Label1}"
+                                    Grid.Row="0" Grid.RowSpan="2" DisplayDefaultValueOnEmptyText="True" LostFocus="IntMemSize_LostFocus"/>
+                <Label Content="Bytes (B)" Grid.Column="1" Margin="70,29.96,0,0" Height="{Binding ActualHeight, ElementName=Label1}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="59"
+                       Grid.Row="0" Grid.RowSpan="2"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Segment Parameters" HorizontalAlignment="Left" Margin="10,142.92,0,0" VerticalAlignment="Top">
+            <Grid Margin="10" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto" MinHeight="203" />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="Label2" Content="Segment Name:" VerticalAlignment="Top" HorizontalAlignment="Left" Height="26" Width="95"/>
+                <Label x:Name="Label3" Content="Segment Size:" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0" VerticalAlignment="Top" Height="26" Width="84"/>
+                <xctk:IntegerUpDown x:Name="IntSegmentSize" DefaultValue="100" Minimum="100" Maximum="{Binding Maximum, ElementName=IntMemSize}" ClipValueToMinMax="True" DisplayDefaultValueOnEmptyText="True" Grid.Column="1" TextAlignment="Left" Margin="0,0,58,0" Grid.Row="1" Increment="100" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=Label3}" Value="0" Focusable="False" LostFocus="IntSegmentSize_LostFocus">
+                    <xctk:IntegerUpDown.Text>
+                        <Binding Path="SelectedItem.(segmentationLibrary:Segment.Size)" ElementName="ListSegments" />
+                    </xctk:IntegerUpDown.Text>
+                </xctk:IntegerUpDown>
+                <TextBox x:Name="TxtName" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="161" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=Label2}">
+                    <TextBox.Text>
+                        <Binding Path="SelectedItem.(segmentationLibrary:Segment.Name)" ElementName="ListSegments" />
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="Bytes (B)" Grid.Column="1" Margin="103,0,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="58" Height="{Binding ActualHeight, ElementName=Label3}"/>
+                <ListBox x:Name="ListSegments" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Left" Margin="0" Grid.Row="2" Width="256" ItemsSource="{Binding Segments}" DisplayMemberPath="Name" MinHeight="150" Height="200" VerticalAlignment="Top"
+                         d:DataContext="{d:DesignInstance local:MainWindow}" />
+                <Button x:Name="BtnPlaceInMemory" Content="Place in Memory" HorizontalAlignment="Left" Margin="42,5,0,0" Grid.Row="3"  VerticalAlignment="Top" Width="119" Grid.Column="1" Height="20" Click="BtnPlaceInMemory_Click" />
+            </Grid>
+        </GroupBox>
+        <DataGrid Height="222.2" Margin="302,10,10,0" VerticalAlignment="Top" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Segment #"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Segment Name"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Limit"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Base"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <local:StackedRow x:Name="BarMemory" Margin="302,239,10,0" Padding="0" VerticalAlignment="Top" Height="234.88"/>
+    </Grid>
+</Window>
+
+
+
+
+
+
+

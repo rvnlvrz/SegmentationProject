@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentationLibrary", "SegmentationLibrary\SegmentationLibrary.csproj", "{78A3AE6E-CD17-4E96-8426-62893D8272C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentationApp", "SegmentationApp\SegmentationApp.csproj", "{42C831EE-7846-490B-814A-30F233260000}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78A3AE6E-CD17-4E96-8426-62893D8272C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A3AE6E-CD17-4E96-8426-62893D8272C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A3AE6E-CD17-4E96-8426-62893D8272C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A3AE6E-CD17-4E96-8426-62893D8272C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42C831EE-7846-490B-814A-30F233260000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C831EE-7846-490B-814A-30F233260000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42C831EE-7846-490B-814A-30F233260000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42C831EE-7846-490B-814A-30F233260000}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C236225C-9E5B-43F8-866E-80856D072B84}
+	EndGlobalSection
+EndGlobal
