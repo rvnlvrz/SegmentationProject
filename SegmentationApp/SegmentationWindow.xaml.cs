@@ -114,6 +114,7 @@ namespace SegmentationApp
                     Title = "Free Space"
                 });
             }
+            BarMemory.ResetZoom();
         }
 
         private void BtnApply_Click(object sender, RoutedEventArgs e)
@@ -148,6 +149,7 @@ namespace SegmentationApp
             BarMemory.Formatter = value => value + " Bytes";
             BarMemory.Labels = new[] {"Main Memory"};
             BarMemory.BindContext();
+            BarMemory.ResetZoom();
         }
 
         private void IntMemSize_LostFocus(object sender, RoutedEventArgs e)

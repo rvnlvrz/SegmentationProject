@@ -14,7 +14,7 @@
                 <wpf:Axis Labels="{Binding Labels}" />
             </wpf:CartesianChart.AxisY>
             <wpf:CartesianChart.AxisX>
-                <wpf:Axis LabelFormatter="{Binding Formatter}" MinValue="0" />
+                <wpf:Axis LabelFormatter="{Binding Formatter}" MinValue="0" Name="X"/>
             </wpf:CartesianChart.AxisX>
         </wpf:CartesianChart>
     </Grid>

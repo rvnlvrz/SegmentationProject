@@ -43,5 +43,14 @@ namespace SegmentationApp
         {
             DataContext = this;
         }
+
+        /// <summary>
+        ///     Resets the zoom level of the graph.
+        /// </summary>
+        public void ResetZoom()
+        {
+            X.MinValue = double.NaN;
+            X.MaxValue = double.NaN;
+        }
     }
 }
