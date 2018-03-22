@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using LiveCharts;
@@ -60,11 +59,11 @@ namespace SegmentationApp
             }
 
             // Pass generated segments into segment table
-            Debug.Assert(IntMemSize.Value != null, "IntMemSize.Value != null");
-            var table = new SegmentTable((int) IntMemSize.Value);
-
-            Debug.Assert(required != null, nameof(required) + " != null");
-            table.Allocate(Segments, (int) required);
+            if (IntMemSize.Value != null)
+            {
+                var table = new SegmentTable((int) IntMemSize.Value);
+                table.Allocate(Segments, (int) required);
+            }
 
             // Create bar graph out of the table
             var pointer = 0;
@@ -106,13 +105,13 @@ namespace SegmentationApp
 
             if (pointer != memsize)
             {
-                Debug.Assert(memsize != null, nameof(memsize) + " != null");
-                BarMemory.SeriesCollection.Add(new StackedRowSeries
-                {
-                    Values = new ChartValues<int> {(int) (memsize - pointer)},
-                    DataLabels = true,
-                    Title = "Free Space"
-                });
+                if (memsize != null)
+                    BarMemory.SeriesCollection.Add(new StackedRowSeries
+                    {
+                        Values = new ChartValues<int> {(int) (memsize - pointer)},
+                        DataLabels = true,
+                        Title = "Free Space"
+                    });
             }
             BarMemory.ResetZoom();
         }
@@ -124,28 +123,28 @@ namespace SegmentationApp
             var count = IntSegmentCount.Value;
             for (var i = 0; i < count; i++)
             {
-                Debug.Assert(IntSegmentSize.DefaultValue != null, "IntSegmentSize.DefaultValue != null");
-                Segments.Add(
-                    new Segment
-                    {
-                        Name = $"Segment {i}",
-                        Number = i,
-                        Size = (int) IntSegmentSize.DefaultValue
-                    });
+                if (IntSegmentSize.DefaultValue != null)
+                    Segments.Add(
+                        new Segment
+                        {
+                            Name = $"Segment {i}",
+                            Number = i,
+                            Size = (int) IntSegmentSize.DefaultValue
+                        });
             }
             ListSegments.SelectedIndex = 0;
 
             // Update bar graph to show memory size
             BarMemory.SeriesCollection.Clear();
-            Debug.Assert(IntMemSize.Value != null, "IntMemSize.Value != null");
-            BarMemory.SeriesCollection.Add(
-                new StackedRowSeries
-                {
-                    Values = new ChartValues<int> {(int) IntMemSize.Value},
-                    //DataLabels = true,
-                    Title = "Free Space"
-                    //LabelPoint = point => point.Sum + ""
-                });
+            if (IntMemSize.Value != null)
+                BarMemory.SeriesCollection.Add(
+                    new StackedRowSeries
+                    {
+                        Values = new ChartValues<int> {(int) IntMemSize.Value},
+                        //DataLabels = true,
+                        Title = "Free Space"
+                        //LabelPoint = point => point.Sum + ""
+                    });
             BarMemory.Formatter = value => value + " Bytes";
             BarMemory.Labels = new[] {"Main Memory"};
             BarMemory.BindContext();

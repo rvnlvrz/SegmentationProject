@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using SegmentationLibrary.Annotations;
 
@@ -145,11 +144,6 @@ namespace SegmentationLibrary
         /// </summary>
         public int Number
         {
-            get
-            {
-                Debug.Assert(_number != null, nameof(_number) + " != null");
-                return (int) _number;
-            }
             set
             {
                 if (value != _number)
@@ -209,8 +203,8 @@ namespace SegmentationLibrary
         {
             get
             {
-                Debug.Assert(_size != null, nameof(_size) + " != null");
-                return (int) _size;
+                if (_size != null) return (int) _size;
+                return 0;
             }
             set
             {
