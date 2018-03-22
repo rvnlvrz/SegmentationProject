@@ -104,7 +104,6 @@ namespace SegmentationApp
                 }
 
             if (pointer != memsize)
-            {
                 if (memsize != null)
                     BarMemory.SeriesCollection.Add(new StackedRowSeries
                     {
@@ -112,7 +111,6 @@ namespace SegmentationApp
                         DataLabels = true,
                         Title = "Free Space"
                     });
-            }
             BarMemory.ResetZoom();
         }
 
@@ -122,7 +120,6 @@ namespace SegmentationApp
             Segments.Clear();
             var count = IntSegmentCount.Value;
             for (var i = 0; i < count; i++)
-            {
                 if (IntSegmentSize.DefaultValue != null)
                     Segments.Add(
                         new Segment
@@ -131,7 +128,6 @@ namespace SegmentationApp
                             Number = i,
                             Size = (int) IntSegmentSize.DefaultValue
                         });
-            }
             ListSegments.SelectedIndex = 0;
 
             // Update bar graph to show memory size
