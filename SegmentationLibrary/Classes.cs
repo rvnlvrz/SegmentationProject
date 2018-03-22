@@ -144,6 +144,12 @@ namespace SegmentationLibrary
         /// </summary>
         public int Number
         {
+            [UsedImplicitly]
+            get
+            {
+                if (_number != null) return (int) _number;
+                return 0;
+            }
             set
             {
                 if (value != _number)
